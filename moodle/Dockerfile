@@ -57,4 +57,9 @@ RUN mkdir -p /var/www/moodledata && \
     chmod -R 777 /var/www/moodledata
 
 # Set permissions
-RUN chown -R www-data:www-data /var/www/html 
+RUN chown -R www-data:www-data /var/www/html /var/www/moodledata && \
+    chmod -R 755 /var/www/html && \
+    chmod -R 777 /var/www/moodledata && \
+    mkdir -p /var/lib/php/sessions && \
+    chown -R www-data:www-data /var/lib/php/sessions
+  
