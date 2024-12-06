@@ -13,6 +13,7 @@ services:
       db:
         condition: service_healthy
     restart: unless-stopped
+    user: "${UID:-1000}:${GID:-1000}"
 
   php:
     build: .
@@ -25,7 +26,6 @@ services:
       - POST_MAX_SIZE=64M
       - MAX_EXECUTION_TIME=300
       - PHP_MAX_INPUT_VARS=5000
-    user: "1000:1000"
     restart: unless-stopped
 
   db:
