@@ -10,6 +10,13 @@ RUN mkdir -p /var/cache/nginx && \
     chown -R nginx:nginx /var/cache/nginx && \
     chmod -R 755 /var/cache/nginx
 
+# Create necessary directories and set permissions
+RUN mkdir -p /var/log/nginx && \
+    chown -R nginx:nginx /var/log/nginx && \
+    chmod -R 755 /var/log/nginx && \
+    mkdir -p /var/run && \
+    chown -R nginx:nginx /var/run
+
 # Remove default nginx pid file location
 RUN rm -rf /var/run/nginx.pid
 
@@ -18,9 +25,9 @@ RUN mkdir -p /tmp/nginx && \
     chown -R nginx:nginx /tmp/nginx && \
     chmod -R 755 /tmp/nginx
 
-# Update nginx configuration to use the new pid location
-RUN echo "pid /tmp/nginx/nginx.pid;" > /etc/nginx/nginx.conf.new && \
-    cat /etc/nginx/nginx.conf >> /etc/nginx/nginx.conf.new && \
-    mv /etc/nginx/nginx.conf.new /etc/nginx/nginx.conf
+# Set proper permissions for nginx directories
+RUN chown -R nginx:nginx /etc/nginx && \
+    chmod -R 755 /etc/nginx
 
-USER nginx 
+# Add default command
+CMD ["nginx", "-g", "daemon off;"]
